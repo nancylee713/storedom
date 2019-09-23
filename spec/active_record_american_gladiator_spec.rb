@@ -162,8 +162,7 @@ describe "ActiveRecord American Gladiator" do
       # most_popular_items = Item.select("items.*, count(order_items.item_id) as item_count").joins(:order_items).group("items.id").order("item_count DESC").take(2)
 
       # option 2
-      top_item_ids = OrderItem.group(:item_id).order('COUNT(item_id) DESC').limit(2).pluck(:item_id)
-      most_popular_items = top_item_ids.map {|id| Item.find(id) }
+      most_popular_items = Item.joins(:order_items).group(:item_id).order('COUNT(item_id) DESC').limit(2)
 
       # Changeable Stop
 
